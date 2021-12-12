@@ -16,10 +16,11 @@ export default class App extends Component {
   componentDidMount() {
     axios.get('http://localhost:5000/api/courses')
       .then(response => {
+        console.log(response.data)
         this.setState({
-          courses: response.data.data
+          courses: response.data
         });
-        console.log('Done fetching!')
+        //console.log('Done fetching!')
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -27,7 +28,12 @@ export default class App extends Component {
   }
 
   render() { 
-    console.log(this.state.courses);
+    console.log("before logging");
+    var list = []
+    list = this.state.courses
+    console.log(list);
+    var titles= list.map(course => course.title)
+    console.log(titles)
     return (
       <div>
         <div className="main-header">
@@ -37,7 +43,7 @@ export default class App extends Component {
           </div>   
         </div>    
         <div className="main-content">
-          <GifList />
+          <GifList data={this.state.courses} />
         </div>
       </div>
     );
