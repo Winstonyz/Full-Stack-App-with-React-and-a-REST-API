@@ -91,7 +91,7 @@ export default class CreateCourse extends Component {
 
   submit = () => {
     const { context } = this.props;
-  
+    const authUser = context.authenticatedUser;
     const {
       title,
       description,
@@ -109,7 +109,7 @@ export default class CreateCourse extends Component {
     //createcourse() is an asynchronous operation that returns a promise. 
     //The resolved value of the promise is either an array of errors (sent from the API if the response is 400), 
     //or an empty array (if the response is 201).
-    context.data.createCourse(course).then(errors => {
+    context.data.createCourse(course,authUser.emailAddress, authUser.password).then(errors => {
       if (errors.length) {
         this.setState({ errors });
       }else {

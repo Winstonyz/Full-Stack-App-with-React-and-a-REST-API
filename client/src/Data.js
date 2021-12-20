@@ -30,7 +30,7 @@
  
      //checks if requiresAuth is truthy (or considered true)
      if (requiresAuth) {    
-       const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+       const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
        //The btoa() method creates a base-64 encoded ASCII string from a "string" of data. 
        //btoa() will encode the username and password credentials passed to the api() method. 
        //The credentials will be passed as an object containing username and password properties.
@@ -68,8 +68,10 @@
      }
    }
 
-   async createCourse(course) {
-    const response = await this.api('/courses', 'POST', course);
+   //because creating a course needs credentials, we need to set requiresAuth to be true and send in credentials info
+   //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null)
+   async createCourse(course, emailAddress, password) {
+    const response = await this.api('/courses', 'POST', course, true, {emailAddress, password});
     if (response.status === 201) {
       return [];
     }

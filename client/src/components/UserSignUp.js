@@ -1,6 +1,3 @@
-/**
- * code reference: course material React Authentication/Set up the React App
- */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
