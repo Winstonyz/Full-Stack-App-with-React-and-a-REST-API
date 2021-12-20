@@ -53,8 +53,9 @@ router.get('/courses', asyncHandler(async (req, res) => {
 
 //A /api/courses/:id GET route that will return the corresponding course including the User associated with
 // that course and a 200 HTTP status code.
+//https://stackoverflow.com/questions/64799742/sequelize-error-you-must-use-the-as-keyword-to-specify-the-alias-of-the-assoc
 router.get('/courses/:id', asyncHandler(async (req, res) => {
-  const course = await Course.findByPk(req.params.id)
+  const course = await Course.findByPk(req.params.id, {include:[{model: User, attributes:['id', 'firstName', 'lastName'], as:'user'}]})
   res.status(200).json({course});
 }));
 

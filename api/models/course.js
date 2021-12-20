@@ -34,7 +34,11 @@ module.exports = (sequelize) => {
     estimatedTime: {
       type: DataTypes.STRING,
       allowNull: true
-    }
+    },
+    materialsNeeded: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, { sequelize });
 
   //In the Courses model, add a one-to-one association between the Course and User models using the belongsTo() method.
