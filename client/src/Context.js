@@ -41,9 +41,13 @@ export class Provider extends Component {
   }
 
   //The returned PromiseValue will be an object holding the authenticated user's name and username values
-  signIn = async (username, password) => {
-    const user = await this.data.getUser(username, password);
+  signIn = async (emailAddress, password) => {
+    console.log("password!!!!!!!!!!")
+    console.log(password)
+    const user = await this.data.getUser(emailAddress, password);
+
     if (user !== null) {
+      user.password = password;
       this.setState(() => {
         return {
           authenticatedUser: user,

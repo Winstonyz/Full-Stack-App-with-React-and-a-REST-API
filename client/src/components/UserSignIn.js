@@ -79,8 +79,11 @@ export default class UserSignIn extends Component {
           });
         }else {
           //this.props.history.push('/authenticated');
+          const authUser = context.authenticatedUser;
+          console.log("After login credential check")
+          console.log(authUser)
           this.props.history.push(from);
-          console.log(`SUCCESS! ${emailAddress} is now signed in!`);
+          console.log(`SUCCEsssSS! ${emailAddress} is now signed in! Password is: ${password}`);
        }
       }).catch( err => {
         console.log(err);

@@ -1,20 +1,81 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
+import axios from 'axios';
 
-export default class CreateCourse extends Component {
+export default class UpdateCourse extends Component {
+  // render() {
+  //   return (
+  //     <main>
+  //     <div className="wrap">
+  //         <h2>Update Course</h2>
+  //         <p>update course page.</p>
+  //     </div>
+  // </main>
+  //   );
+  // }
   state = {
     title: '',
     description: '',
     estimatedTime: '',
     materialsNeeded: '',
+    userId:'',
     errors: [],
   }
 
+  
+  componentDidMount() {
+    console.log("updating!!")
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+    const currentUserId = authUser.userId;
+
+    axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
+      .then(response => {
+        console.log("update course; getting data")
+        console.log(response.data.course.user.id)
+        console.log(currentUserId)
+        if(currentUserId !== response.data.course.user.id){
+          this.props.history.push('/forbidden');    
+        }else{
+          console.log("authorized access")
+          this.setState({
+            title: response.data.course.title,
+            description: response.data.course.description,
+            userId: response.data.course.user.id
+          });
+          //console.log('Done fetching!')
+          if(response.data.course.materialsNeeded){
+            console.log("update material")
+            console.log(response.data.course.materialsNeeded)
+            this.setState({
+              materials: response.data.course.materialsNeeded
+            });
+            console.log(this.state.materials)
+          }
+  
+          if(response.data.course.estimatedTime){
+            console.log("update estimatedTime")
+            this.setState({
+              estimatedTime: response.data.course.estimatedTime
+            });
+          }
+          
+        }
+
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+  }
+
+
   render() {
+    console.log(`updating!!!!`)
+    console.log(this.state.materials)
     const { context } = this.props;
     const authUser2 = context.authenticatedUser;
-    console.log(`user logging: ${authUser2}`)
+
     const {
       title,
       description,
@@ -22,15 +83,19 @@ export default class CreateCourse extends Component {
       materialsNeeded,
       errors,
     } = this.state;
-
+    
+    console.log(`material before return`)
+    console.log(this.state.materials)
+    
+    
     return (
       <div className="wrap">
-          <h2>Create Course</h2>
+          <h2>Update Course</h2>
           <Form 
             cancel={this.cancel}
             errors={errors}
             submit={this.submit}
-            submitButtonText="Create Course"
+            submitButtonText="Update Course"
             elements={() => (
               <React.Fragment>
               <div className="main--flex">
@@ -69,7 +134,7 @@ export default class CreateCourse extends Component {
                     id="materialsNeeded" 
                     name="materialsNeeded"
                     type="text"
-                    value={materialsNeeded} 
+                    value={this.state.materialsNeeded} 
                     onChange={this.change} 
                     placeholder="Materials Needed" />
                 </label>
@@ -95,7 +160,7 @@ export default class CreateCourse extends Component {
   submit = () => {
     const { context } = this.props;
     const authUser = context.authenticatedUser;
-    console.log(`user logging: ${authUser}`)
+    //console.log(`user logging: ${authUser}`)
     
     const {
       title,
@@ -105,7 +170,7 @@ export default class CreateCourse extends Component {
     } = this.state; 
 
     const userId = authUser.userId;
-    console.log(`user logging: ${userId}`)
+    //console.log(`user logging: ${userId}`)
     const course = {
       title,
       description,
@@ -117,14 +182,17 @@ export default class CreateCourse extends Component {
     //createcourse() is an asynchronous operation that returns a promise. 
     //The resolved value of the promise is either an array of errors (sent from the API if the response is 400), 
     //or an empty array (if the response is 201).
-    context.data.createCourse(course,authUser.emailAddress, authUser.password).then(errors => {
+    const courseID = this.props.match.params.id
+    context.data.updateCourse(courseID, course,authUser.emailAddress, authUser.password).then(errors => {
       if (errors.length) {
+        console.log("errors found")
         this.setState({ errors });
       }else {
         console.log(`${title} is successfully signed up and authenticated!`);
         this.props.history.push('/');    
     }
   }).catch( err => { // handle rejected promises
+      console.log("update errors found")
       console.log(err);
       this.props.history.push('/error'); // push to history stack
       //change the current URL from /signup to /error when there is an error

@@ -41,6 +41,7 @@
    }
  
    async getUser(emailAddress, password) { // add new parameters
+    console.log("password logging")
      const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password })
      if (response.status === 200) {
        return response.json().then(data => data);
@@ -97,5 +98,36 @@
       throw new Error();
     }
   }
+
+  async updateCourse(courseID, course, emailAddress, password) {
+    const response = await this.api(`/courses/${courseID}`, 'PUT', course, true, {emailAddress, password});
+    if (response.status === 204) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
+
+  async deleteCourse(courseID, emailAddress, password) {
+    const response = await this.api(`/courses/${courseID}`, 'DELETE', null, true, {emailAddress, password});
+    if (response.status === 204) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
+  
  }
  
