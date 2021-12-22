@@ -21,7 +21,8 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
     firstName: user.firstName,
     lastName: user.lastName,
     emailAddress: user.emailAddress,
-    password: user.password
+    password: user.password,
+    userId:user.id
   });
 }));
 
@@ -63,6 +64,7 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 //created course, and return a 201 HTTP status code and no content.
 router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
   try {
+    console.log("starting to post a course")
     const newCourse = await Course.create(req.body);
     res.status(201).location(`/courses/${newCourse.id}`).end();
   } catch (error) {
@@ -82,6 +84,9 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
 //code reference2: course material S4V5_final_project
 router.put('/courses/:id', authenticateUser, asyncHandler(async(req,res) => {
   try{
+    console.log("starting to update a course")
+    console.log(`time: ${req.body.estimatedTime}`)
+    console.log(`materials: ${req.body.materialsNeeded}`)
     const course = await Course.findByPk(req.params.id);
     if(course){
         course.title = req.body.title;
@@ -90,6 +95,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async(req,res) => {
         course.materialsNeeded = req.body.materialsNeeded;
         course.title = req.body.title;
         await course.save();
+        console.log("successful update!")
         res.status(204).end();
     } else {
         res.status(404).json({message: "Course Not Found"});
@@ -98,6 +104,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async(req,res) => {
         const errors = error.errors.map(err => err.message);
         res.status(400).json({ errors });   
       } else {
+        console.log("else error from api")
         throw error;
       }
     }
