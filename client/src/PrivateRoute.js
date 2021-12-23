@@ -1,8 +1,12 @@
+/**
+ * code reference: course material React Authentication/Set up the React App
+ */
+
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './Context';
 
-
+//Define a higher-order component (HOC) named PrivateRoute for configuring protected routes (i.e. routes that require authentication).
 
 /**
  * "The PrivateRoute component will serve as a high-order component for any routes that you want to protect 

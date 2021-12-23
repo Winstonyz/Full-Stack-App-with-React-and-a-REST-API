@@ -1,3 +1,7 @@
+/**
+ * code reference: course material React Authentication/Set up the React App
+ */
+
 import React, { Component } from 'react';
 import Data from './Data';
 import Cookies from 'js-cookie';
@@ -17,7 +21,8 @@ export class Provider extends Component {
     this.data = new Data();
     this.cookie = Cookies.get('authenticatedUser');
     this.state = {
-      authenticatedUser: this.cookie ? JSON.parse(this.cookie) : null
+      authenticatedUser: this.cookie ? JSON.parse(this.cookie) : null,
+      currentUrl: window.location.href
     };
   }
 

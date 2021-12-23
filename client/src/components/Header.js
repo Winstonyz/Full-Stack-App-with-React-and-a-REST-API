@@ -1,5 +1,14 @@
+/**
+ * code reference: course material React Authentication/Set up the React App
+ *                 markup html file
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+//stateless component: Displays the top menu bar for the application and includes buttons for 
+//signing in and signing up (if there's not an authenticated user) or the user's name and a button 
+//for signing out (if there's an authenticated user).
 
 export default class Header extends React.PureComponent {
   render() {
@@ -16,7 +25,7 @@ export default class Header extends React.PureComponent {
             {authUser ?
               <React.Fragment>
                 <ul className="header--signedin">
-                  <span>Welcome, {authUser.firstName} !</span>
+                  <span>Welcome, {authUser.firstName} {authUser.lastName} !</span>
                   <li><Link to="/signout">Sign Out</Link></li>
                 </ul>
               </React.Fragment>

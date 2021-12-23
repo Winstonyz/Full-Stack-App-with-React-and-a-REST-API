@@ -1,4 +1,16 @@
+/**
+ * code reference: course material React Authentication/Set up the React App
+ *                 markup html file
+ */
+
 import React from 'react';
+
+
+//this component: renders any validation errors sent from the API, 
+//via the <ErrorsDisplay> function component. It also renders the "Submit" and 
+//"Cancel" buttons of a form, as well as handle their functionality, via the 
+//functions handleSubmit and handleCancel. Props are passed to this component – 
+//from a parent component like UserSignUp – to provide it the data it needs.
 
 export default (props) => {
   const {

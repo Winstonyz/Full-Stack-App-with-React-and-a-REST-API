@@ -1,8 +1,17 @@
+/**
+ * code reference: course material React Authentication/Set up the React App
+ *                 markup html file
+ */
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
+//This component provides the "Sign Up" screen by rendering a form that allows a 
+//user to sign up by creating a new account. 
+
 export default class UserSignUp extends Component {
+ //set state for all the necessary info required from a new user
   state = {
     firstName: '',
     lastName: '',
@@ -102,7 +111,7 @@ export default class UserSignUp extends Component {
       if (errors.length) {
         this.setState({ errors });
       }else {
-        console.log(`${firstName} ${lastName} is successfully signed up and authenticated!`);
+        //console.log(`${firstName} ${lastName} is successfully signed up and authenticated!`);
         context.actions.signIn(emailAddress, password).then(() => {
           this.props.history.push('/');    
         });

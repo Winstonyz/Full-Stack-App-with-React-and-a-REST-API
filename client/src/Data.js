@@ -1,5 +1,3 @@
-
-
 /**
  * code reference: course material React Authentication/Set up the React App
  */

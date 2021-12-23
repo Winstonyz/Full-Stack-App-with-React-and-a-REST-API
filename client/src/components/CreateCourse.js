@@ -1,5 +1,12 @@
+/**
+ * code reference: course material React Authentication/Set up the React App
+ *                 markup html file
+ */
+
 import React, { Component } from 'react';
 import Form from './Form';
+
+//This component provides the "Create Course" screen by rendering a form that allows a user to create a new course.
 
 export default class CreateCourse extends Component {
   state = {
@@ -13,7 +20,7 @@ export default class CreateCourse extends Component {
   render() {
     const { context } = this.props;
     const authUser2 = context.authenticatedUser;
-    console.log(`user logging: ${authUser2}`)
+    //console.log(`user logging: ${authUser2}`)
     const {
       title,
       description,
@@ -22,6 +29,7 @@ export default class CreateCourse extends Component {
       errors,
     } = this.state;
 
+    //getting user input with a form
     return (
       <main>
       <div className="wrap">
@@ -82,6 +90,7 @@ export default class CreateCourse extends Component {
     );
   }
 
+  //change event handler
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -93,6 +102,7 @@ export default class CreateCourse extends Component {
     });
   }
 
+  //submit event handler
   submit = () => {
     const { context } = this.props;
     const authUser = context.authenticatedUser;
