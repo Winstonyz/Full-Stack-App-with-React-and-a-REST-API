@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class CreateCourse extends Component {
@@ -24,6 +23,7 @@ export default class CreateCourse extends Component {
     } = this.state;
 
     return (
+      <main>
       <div className="wrap">
           <h2>Create Course</h2>
           <Form 
@@ -78,6 +78,7 @@ export default class CreateCourse extends Component {
               </React.Fragment>
             )} />
       </div>
+      </main>
     );
   }
 

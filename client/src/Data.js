@@ -120,11 +120,13 @@
       return [];
     }
     else if (response.status === 400) {
+      console.log("deleting issue 400")
       return response.json().then(data => {
         return data.errors;
       });
     }
     else {
+      console.log("deleting issue else")
       throw new Error();
     }
   }

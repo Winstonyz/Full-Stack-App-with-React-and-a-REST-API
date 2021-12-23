@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
 
 export default class CourseDetail extends Component {
   constructor() {
@@ -12,6 +12,7 @@ export default class CourseDetail extends Component {
       authUser:{},
       courseID:""
     };
+    this.handleDelete = this.handleDelete.bind(this)
   } 
 
 
@@ -26,7 +27,8 @@ export default class CourseDetail extends Component {
           user: response.data.course.user,
           courseID: response.data.course.id
         });
-        //console.log('Done fetching!')
+        console.log('Done fetching!')
+        console.log(response.data.course.user)
         if(response.data.course.materialsNeeded){
           this.setState({
             materials: response.data.course.materialsNeeded.split("* ")
@@ -47,19 +49,19 @@ export default class CourseDetail extends Component {
       });
   }
 
-
+  
   //code reference: https://reactjs.org/docs/handling-events.html
   handleDelete() {
     console.log("deleting course now")
     const { context } = this.props;
     const authUser = this.state.authUser
     const courseID = this.state.courseID
-    context.data.updateCourse(courseID,authUser.emailAddress, authUser.password).then(errors => {
+    context.data.deleteCourse(courseID,authUser.emailAddress, authUser.password).then(errors => {
       if (errors.length) {
         console.log("errors found")
         this.setState({ errors });
       }else {
-        console.log(`${title} is successfully signed up and authenticated!`);
+        console.log(`successful deletion`);
         this.props.history.push('/');    
     }
   }).catch( err => { // handle rejected promises
@@ -87,14 +89,38 @@ export default class CourseDetail extends Component {
     )})
     //console.log(myArray)
 
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+    console.log("making sure userID checks out")
+    console.log(authUser)
+    console.log(instructor)
 
     return (
       <main>
       <div className="actions--bar">
           <div className="wrap">
-              <a className="button" href={`/courses/${courseInfo.id}/update`}>Update Course</a>
-              <button className="button" onClick={this.handleDelete} href="/">Delete Course</button>
-              <a className="button button-secondary" href="/">Return to List</a>
+            { (()=>{
+              if(authUser){
+                if(authUser.userId===instructor.id){
+                  return(
+                    <React.Fragment>
+                    <a className="button" href={`/courses/${courseInfo.id}/update`}>Update Course</a>
+                    <button className="button" onClick={this.handleDelete} href="/">Delete Course</button>
+                    <a className="button button-secondary" href="/">Return to List</a>
+                  </React.Fragment>
+                  )
+                }else{
+                  return(
+                    <React.Fragment>
+                      <a className="button button-secondary" href="/">Return to List</a>
+                    </React.Fragment>
+                  )
+                }
+              }
+            })()
+
+            }
+
           </div>
       </div>
       

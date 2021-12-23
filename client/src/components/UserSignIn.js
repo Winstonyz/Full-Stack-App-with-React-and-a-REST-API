@@ -17,9 +17,8 @@ export default class UserSignIn extends Component {
     } = this.state;
 
     return (
-      <div className="bounds">
-        <div className="grid-33 centered signin">
-          <h1>Sign In</h1>
+      <div className="form--centered">
+          <h2>Sign In</h2>
           <Form 
             cancel={this.cancel}
             errors={errors}
@@ -46,7 +45,6 @@ export default class UserSignIn extends Component {
           <p>
             Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
           </p>
-        </div>
       </div>
     );
   }
@@ -66,7 +64,7 @@ export default class UserSignIn extends Component {
     // const { context } = this.props;
     // const { username, password } = this.state;
     const { context } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/authenticated' } };
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
 
     

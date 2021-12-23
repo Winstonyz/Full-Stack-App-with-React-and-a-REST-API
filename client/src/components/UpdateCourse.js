@@ -47,11 +47,11 @@ export default class UpdateCourse extends Component {
           //console.log('Done fetching!')
           if(response.data.course.materialsNeeded){
             console.log("update material")
-            console.log(response.data.course.materialsNeeded)
+            //console.log(response.data.course.materialsNeeded)
             this.setState({
-              materials: response.data.course.materialsNeeded
+              materialsNeeded: response.data.course.materialsNeeded
             });
-            console.log(this.state.materials)
+            //console.log(this.state.materials)
           }
   
           if(response.data.course.estimatedTime){
@@ -134,7 +134,7 @@ export default class UpdateCourse extends Component {
                     id="materialsNeeded" 
                     name="materialsNeeded"
                     type="text"
-                    value={this.state.materialsNeeded} 
+                    value={materialsNeeded} 
                     onChange={this.change} 
                     placeholder="Materials Needed" />
                 </label>
@@ -189,7 +189,7 @@ export default class UpdateCourse extends Component {
         this.setState({ errors });
       }else {
         console.log(`${title} is successfully signed up and authenticated!`);
-        this.props.history.push('/');    
+        this.props.history.push(`/courses/${courseID}`);    
     }
   }).catch( err => { // handle rejected promises
       console.log("update errors found")
