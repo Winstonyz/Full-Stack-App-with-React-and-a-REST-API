@@ -1,3 +1,6 @@
+./api/node_modules
+./client/node_modules
+
 # Compiled class file
 *.class
 
